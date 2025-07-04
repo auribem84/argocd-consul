@@ -12,7 +12,7 @@ spec:
     chart: consul
     helm:
       valueFiles:
-        - https://raw.githubusercontent.com/your-org/consul-gitops-config/main/helm-values/consul-values.yaml # Link to your values file in Git
+        - https://raw.githubusercontent.com/auribem84/argocd-consul/main/helm-values/consul-values.yaml # Link to your values file in Git
         # Or, if your values file is in the same repo as consul-app.yaml:
         # - ../helm-values/consul-values.yaml # Relative path within the Git repo
 
