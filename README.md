@@ -1,0 +1,2 @@
+# argocd-consul
+argocd-consul
