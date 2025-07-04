@@ -1,0 +1,56 @@
+global:
+  name: consul
+  datacenter: dc1
+  domain: consul
+  acls:
+    manageSystemACLs: true
+  gossipEncryption:
+    autoGenerate: true
+
+server:
+  replicas: 3
+  resources:
+    requests:
+      memory: "2Gi"
+      cpu: "1000m"
+    limits:
+      memory: "4Gi"
+      cpu: "2000m"
+  # Add affinity rules for anti-affinity to ensure servers are on different nodes
+  affinity:
+    podAntiAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+      - labelSelector:
+          matchLabels:
+            app: {{ template "consul.name" . }}
+            release: {{ .Release.Name }}
+            component: server
+        topologyKey: kubernetes.io/hostname
+
+client:
+  enabled: true
+  resources:
+    requests:
+      memory: "256Mi"
+      cpu: "250m"
+    limits:
+      memory: "512Mi"
+      cpu: "500m"
+
+ui:
+  enabled: true
+  ingress:
+    enabled: true
+    hosts:
+      - consul.yourdomain.com # Replace with your domain
+    # Add TLS configuration if you have cert-manager or a pre-existing secret
+    # tls:
+    #   - hosts:
+    #       - consul.yourdomain.com
+    #     secretName: consul-ui-tls-secret
+
+connectInject:
+  enabled: true
+
+catalogSync:
+  enabled: true

@@ -1,0 +1,32 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: consul
+  namespace: argocd # Or the namespace where your ArgoCD is installed
+spec:
+  project: default # Or your dedicated Consul project if you've created one
+
+  source:
+    repoURL: https://helm.releases.hashicorp.com # Official HashiCorp Helm chart repository
+    targetRevision: "1.2.2" # Pin to a specific Consul Helm chart version for stability
+    chart: consul
+    helm:
+      valueFiles:
+        - https://raw.githubusercontent.com/your-org/consul-gitops-config/main/helm-values/consul-values.yaml # Link to your values file in Git
+        # Or, if your values file is in the same repo as consul-app.yaml:
+        # - ../helm-values/consul-values.yaml # Relative path within the Git repo
+
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: consul # Namespace where Consul will be deployed
+
+  syncPolicy:
+    automated:
+      prune: true # Delete resources that are no longer in Git
+      selfHeal: true # Automatically sync if there's drift
+    syncOptions:
+      - CreateNamespace=true # ArgoCD will create the 'consul' namespace if it doesn't exist
+    # You might want to use sync waves for more complex deployments,
+    # especially if you have other applications depending on Consul.
+    # See HashiCorp's blog on sync waves for Consul:
+    # https://www.hashicorp.com/blog/deploy-consul-on-kubernetes-with-argo-cd
