@@ -17,15 +17,15 @@ server:
       memory: "4Gi"
       cpu: "2000m"
   # Add affinity rules for anti-affinity to ensure servers are on different nodes
-  affinity:
-    podAntiAffinity:
-      requiredDuringSchedulingIgnoredDuringExecution:
-      - labelSelector:
-          matchLabels:
-            app: {{ template "consul.name" . }}
-            release: {{ .Release.Name }}
-            component: server
-        topologyKey: kubernetes.io/hostname
+  #affinity:
+  #  podAntiAffinity:
+  #    requiredDuringSchedulingIgnoredDuringExecution:
+  #    - labelSelector:
+  #        matchLabels:
+  #          app: {{ template "consul.name" . }}
+  #          release: {{ .Release.Name }}
+  #          component: server
+  #      topologyKey: kubernetes.io/hostname
 
 client:
   enabled: true
