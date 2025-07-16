@@ -42,7 +42,7 @@ ui:
   ingress:
     enabled: true
     hosts:
-      - consul.yourdomain.com # Replace with your domain
+      - consul.local # Replace with your domain
     # Add TLS configuration if you have cert-manager or a pre-existing secret
     # tls:
     #   - hosts:
