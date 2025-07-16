@@ -8,7 +8,7 @@ spec:
 
   source:
     repoURL: https://helm.releases.hashicorp.com # Official HashiCorp Helm chart repository
-    targetRevision: "1.7.2" # Pin to a specific Consul Helm chart version for stability
+    targetRevision: "1.2.2" # Pin to a specific Consul Helm chart version for stability
     chart: consul
     helm:
       valueFiles:
