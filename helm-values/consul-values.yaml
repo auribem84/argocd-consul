@@ -1,12 +1,28 @@
 # helm-values/consul-values.yaml
 
-# This is a minimal configuration to get Consul running
-# and bypass the Ingress error.
-
+# Configuration for Consul as Vault storage backend
 server:
-  replicas: 1
+  replicas: 3
+  bootstrap: true
+  disruptionBudget:
+    enabled: true
+    maxUnavailable: 0
+
+global:
+  name: consul
+  acls:
+    manageSystemACLs: true
+  gossipEncryption:
+    autoGenerate: true
+  tls:
+    enabled: true
+    enableAutoEncrypt: true
 
 ui:
   enabled: true
   ingress:
-    enabled: false # <--- This line prevents the problematic template from running
+    enabled: false
+
+client:
+  enabled: true
+  grpc: true
